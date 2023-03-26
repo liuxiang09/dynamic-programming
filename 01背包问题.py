@@ -25,8 +25,34 @@ def knapsack(N, W, weight, value):
 
 
 if __name__ == '__main__':
-    N = 3
-    W = 4
-    weight = [1, 3, 4]
-    value = [15, 20, 30]
+    # 生成更复杂的测试数据
+    import random
+    N = 10
+    W = 20
+    weight = [random.randint(1, 10) for i in range(N)]
+    value = [random.randint(1, 10) for i in range(N)]
+
+    # 为数据简单可视化
+    print("物品重量：", end='')
+    for i in range(N):
+        print(weight[i], end=' ')
+    print()
+    print("物品价值：", end='')
+    for i in range(N):
+        print(value[i], end=' ')
+    print()
+    print("背包容量：", W)
     print(knapsack(N, W, weight, value))
+
+    # 写出具体的放入背包的物品
+    # 从最后一个物品开始，如果knapsack(i, j, weight, value) > knapsack(i - 1, j, weight, value)，
+    # 则说明第i个物品放入背包后的最大价值大于不放入第i个物品的最大价值，所以第i个物品放入背包
+    # 然后把背包的容量减去第i个物品的重量，继续判断第i-1个物品是否放入背包
+    i = N
+    j = W
+    while i > 0:
+        if knapsack(i, j, weight, value) > knapsack(i - 1, j, weight, value):
+            print("第", i, "个物品放入背包")
+            j -= weight[i - 1]
+        i -= 1
+        
